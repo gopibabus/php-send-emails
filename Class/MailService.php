@@ -21,7 +21,7 @@ class MailService
     {
         try {
             // Enable verbose debug output
-            $this->mail->SMTPDebug = SMTP::DEBUG_OFF;
+            $this->mail->SMTPDebug = SMTP::DEBUG_SERVER;
             // Send using SMTP
             $this->mail->isSMTP();
             // Set the SMTP server to send through
