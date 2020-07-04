@@ -1,0 +1,16 @@
+{
+    "name": "gopibabus/send-emails-php",
+    "description": "Sending emails in PHP",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gopibabu Srungavarapu",
+            "email": "s.gopibabu@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "phpmailer/phpmailer": "^6.1"
+    }
+}
