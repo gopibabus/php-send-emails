@@ -25,7 +25,7 @@ class MailService
             // Send using SMTP
             $this->mail->isSMTP();
             // Set the SMTP server to send through
-            $this->mail->Host = Config::SMTP_HOST;
+            $this->mail->Host = gethostbyname(Config::SMTP_HOST);
             // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
             $this->mail->Port = Config::SMTP_PORT;
             // Enable SMTP authentication
