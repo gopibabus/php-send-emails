@@ -36,6 +36,14 @@ class MailService
             $this->mail->Password = Config::SMTP_PASSWORD;
             // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
             $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+
+            $this->mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
         } catch (PHPMailerException $e) {
             return "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
         }
