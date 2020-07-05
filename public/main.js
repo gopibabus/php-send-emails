@@ -1,12 +1,15 @@
-document.addEventListener('DOMContentLoaded', init);
-
-function init() {
+document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('emailForm').addEventListener('submit', sendEmail);
-}
+});
 
+/**
+ * Responsible for fetching data from Form and send that information to email service.
+ * @param {*} event
+ */
 function sendEmail(event) {
 	event.preventDefault();
 
+	//Form Data Object responsible for carrying data to Server
 	var formdata = new FormData();
 	formdata.append('recipient', document.getElementById('recipient').value);
 	formdata.append('email', document.getElementById('email').value);
@@ -24,6 +27,7 @@ function sendEmail(event) {
 		redirect: 'follow',
 	};
 
+	//Making POST request to server to send email.
 	fetch('http://localhost/mail.php', requestOptions)
 		.then((response) => {
 			if (response.status == 200) {
@@ -36,6 +40,9 @@ function sendEmail(event) {
 		});
 }
 
+/**
+ * Responsible for clear data in form fields
+ */
 function clearForm() {
 	document.getElementById('emailForm').reset();
 }

@@ -2,6 +2,7 @@
 require('../Class/MailService.php');
 require('../Class/Utilities.php');
 
+//If file attachments are present then move them to uploads directory
 if (isset($_FILES['file1']['name'])) {
     $currentDirectory = getcwd();
     $uploadDirectory = "/uploads/";
@@ -18,33 +19,31 @@ if (isset($_FILES['file1']['name'])) {
             Utilities::deliverResponse(500, "An error occurred. Please contact the administrator.");
         }
     }
-
-    //Rename uploaded file with prepending timestamp
-    $filename = basename($fileName);
-    $currentDateTime = new DateTime();
-    $timePrefix = $currentDateTime->format('Y-m-d-s-i-H');
-    $newFileName =  "./uploads/{$timePrefix}-{$fileName}";
-    rename("./uploads/{$fileName}", $newFileName);
 }
 
 $mailService = new MailService();
+
+//Add Recipients Info
 $recipients = [
     $_POST['recipient1'] => $_POST['email']
 ];
 $mailService->setRecipientsInfo($recipients);
 
+//Add Attachments to email
 if (isset($_FILES['file1']['name'])) {
     $attachments = [
-        $fileName => $newFileName
+        $fileName => $uploadPath
     ];
     $mailService->addAttachments($attachments);
 }
 
+//Add Subject and Body
 $mailService->setEmailDetails(
     $_POST['subject'],
     $_POST['body'],
     $_POST['alt-body']
 );
 
+//Send Email
 $result = $mailService->sendEmail();
 Utilities::deliverResponse(200, $result);

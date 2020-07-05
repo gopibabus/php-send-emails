@@ -1,10 +1,14 @@
 <?php
 
+/**
+ * Place to store frequently used functions.
+ * Class Utilities
+ */
 class Utilities
 {
+
     /**
      * @param string $folder_path
-     * @return void
      */
     public static function emptyDirectory(string $folder_path): void
     {
@@ -14,7 +18,6 @@ class Utilities
                 unlink($file);
         }
     }
-
 
     /**
      * @param int $statusCode

@@ -22,12 +22,8 @@
 
 ## ⚡TODOs
 
-* Add **ReplyTo** option.
-* Make sure total file attachmenmts size \< 10Mb
+* Make sure total file attachments size \< 10Mb
 * Add **Cc** and **Bcc** options.
-* Add **Charset** option and set it to UTF-8
-* Use **dirname(\_\_FILE\_\_)** to acess files.
-* Make **AltBody** Mandatory and use **strip_tags** to remove html tags from content.
 * Adding **Asynchronous Queue** to send emails
 * Adding Support to use **RabbitMQ** Messaging Service.
 * Adding support to use **Mailgun** service.

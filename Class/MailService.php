@@ -6,6 +6,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP as SMTP;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
+/**
+ * Place to access mail service.
+ * Class MailService
+ */
 class MailService
 {
     private $mail;
@@ -17,7 +21,11 @@ class MailService
         $this->setSenderInformation();
     }
 
-    protected function mailSettings()
+    /**
+     * Place to configure mail service.
+     * @return string
+     */
+    protected function mailSettings(): string
     {
         try {
             // Enable verbose debug output
@@ -34,6 +42,10 @@ class MailService
             $this->mail->Username = Config::SMTP_USER;
             // SMTP password
             $this->mail->Password = Config::SMTP_PASSWORD;
+            // Mail Charset
+            $this->mail->CharSet = 'UTF-8';
+            // Mail Encoding
+            $this->mail->Encoding = 'base64';
             // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
             $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
@@ -49,16 +61,26 @@ class MailService
         }
     }
 
-    protected function setSenderInformation()
+    /**
+     * Add sender information.
+     * @return string
+     */
+    protected function setSenderInformation(): string
     {
         try {
             $this->mail->setFrom('s.gopibabu@gmail.com', 'Gopibabu Srungavarapu');
+            $this->mail->addReplyTo('s.gopibabu@gmail.com', 'Gopibabu Srungavarapu');
         } catch (PHPMailerException $e) {
             return "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
         }
     }
 
-    public function setRecipientsInfo(array $recipients)
+    /**
+     * Add Recipient Information.
+     * @param array $recipients
+     * @return string
+     */
+    public function setRecipientsInfo(array $recipients): string
     {
         try {
             foreach ($recipients as $key => $value) {
@@ -69,7 +91,12 @@ class MailService
         }
     }
 
-    public function addAttachments(array $attachments)
+    /**
+     * Add Attachments
+     * @param array $attachments
+     * @return string|
+     */
+    public function addAttachments(array $attachments): string
     {
         try {
             foreach ($attachments as $key => $value) {
@@ -80,20 +107,31 @@ class MailService
         }
     }
 
+    /**
+     * Add Subject and Body
+     * @param string $subject
+     * @param string $body
+     * @param string $altBody
+     * @return string
+     */
     public function setEmailDetails(string $subject, string $body, string $altBody)
     {
         try {
             $this->mail->isHTML(true);
             $this->mail->Subject = $subject;
-            $this->mail->Body    = $body;
+            $this->mail->Body = $body;
             if (isset($altBody)) {
-                $this->mail->AltBody = $altBody;
+                $this->mail->AltBody = strip_tags($altBody);
             }
         } catch (PHPMailerException $e) {
             return "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
         }
     }
 
+    /**
+     * Send Email trigger
+     * @return bool|string
+     */
     public function sendEmail()
     {
         try {
